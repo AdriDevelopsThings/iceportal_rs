@@ -19,10 +19,6 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-
-      - run: cd iceportal_derive && cargo publish --token ${CRATES_TOKEN}
-        env:
-          CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}
       - run: cargo publish --token ${CRATES_TOKEN}
         env:
           CRATES_TOKEN: ${{ secrets.CRATES_TOKEN }}
