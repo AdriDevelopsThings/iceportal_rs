@@ -1,3 +1,4 @@
+use iceportal_derive::ResponseObject;
 use serde::Deserialize;
 
 use crate::{ResponseObject, fetcher::Fetcher};
@@ -10,19 +11,10 @@ pub enum BAPServiceStatus {
     Paused,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, ResponseObject)]
 #[serde(rename_all = "camelCase")]
+#[response_object(url = "/bap/api/bap-service-status")]
 pub struct BAPServicStatusResponse {
     pub bap_service_status: BAPServiceStatus,
     pub status: bool
-}
-
-impl ResponseObject for BAPServicStatusResponse {
-    fn fetch(fetcher: Fetcher) -> Result<BAPServicStatusResponse, reqwest::Error> {
-        fetcher.fetch()
-    }
-
-    fn url() -> &'static str {
-        "/bap/api/bap-service-status"
-    }
 }

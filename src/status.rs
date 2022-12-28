@@ -1,3 +1,4 @@
+use iceportal_derive::ResponseObject;
 use serde::Deserialize;
 
 use crate::{ResponseObject, fetcher::Fetcher};
@@ -42,8 +43,9 @@ pub struct Connectivity {
     pub remaining_time_seconds: u16
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, ResponseObject)]
 #[serde(rename_all = "camelCase")]
+#[response_object(url = "/api1/rs/status")]
 pub struct StatusResponse {
     pub connection: bool,
     pub service_level: ServiceLevel,
@@ -60,14 +62,4 @@ pub struct StatusResponse {
     pub wagon_class: WagonClass,
     pub connectivity: Connectivity,
     pub bap_installed: bool
-}
-
-impl ResponseObject for StatusResponse {
-    fn fetch(fetcher: Fetcher) -> Result<StatusResponse, reqwest::Error> {
-        fetcher.fetch()
-    }
-
-    fn url() -> &'static str {
-        "/api1/rs/status"
-    }
 }

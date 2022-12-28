@@ -1,14 +1,18 @@
 use fetcher::Fetcher;
 use reqwest::blocking::Client;
 
-const DEFAULT_BASE_URL: &str = "https://iceportal.de";
+const DEFAULT_BASE_URL: &str = "http://iceportal.de";
 
 #[cfg(test)]
 mod tests;
 mod fetcher;
+mod time;
+
+pub mod global_models;
 
 pub mod status;
 pub mod bap;
+pub mod trip_info;
 
 pub trait ResponseObject {
     fn fetch(fetcher: Fetcher) -> Result<Self, reqwest::Error>
