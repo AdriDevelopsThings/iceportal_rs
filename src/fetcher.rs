@@ -14,7 +14,7 @@ impl Fetcher {
             let mut url = self.base_url.clone() + T::url();
             if let Some(map) = options {
                 for (key, value) in map.into_iter() {
-                    url = url.replace(format!("{{{}}}", key).as_str(), &value);
+                    url = url.replace(format!("{{{}}}", key).as_str(), value);
                 }
             }
             let client = reqwest::blocking::Client::new();

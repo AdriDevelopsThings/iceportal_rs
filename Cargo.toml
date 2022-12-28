@@ -1,7 +1,14 @@
 [package]
 name = "iceportal"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
+authors = ["AdriDevelopsThings"]
+readme = "README.md"
+repository = "https://github.com/AdriDevelopsThings/iceportal_rs"
+license = "AGPL-3.0"
+keywords = ["deutsche bahn", "iceportal"]
+description = "Fetch data from the iceportal api in a train"
+categories = ["api-bindings"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -16,4 +23,4 @@ chrono = "0.4.23"
 reqwest = { version = "0.11.13", features = ["blocking", "json"] }
 serde = { version = "1.0.152", features = ["derive"] }
 serde_json = "1.0.91"
-iceportal_derive = { path = "iceportal_derive" }
+iceportal_derive = { version = "1.0.0", path = "iceportal_derive" }
