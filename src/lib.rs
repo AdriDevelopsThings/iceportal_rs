@@ -1,5 +1,8 @@
+use bap::BAPServicStatusResponse;
 use fetcher::Fetcher;
 use reqwest::blocking::Client;
+use status::StatusResponse;
+use trip_info::TripInfoResponse;
 
 const DEFAULT_BASE_URL: &str = "http://iceportal.de";
 
@@ -46,6 +49,18 @@ impl ICEPortal {
         T::fetch(
             Fetcher{ base_url: self.base_url.clone()}
         ).expect("Error while request")
+    }
+
+    pub fn fetch_status() -> StatusResponse {
+        Self::fetch()
+    }
+
+    pub fn fetch_bap() -> BAPServicStatusResponse {
+        Self::fetch()
+    }
+
+    pub fn fetch_trip_info() -> TripInfoResponse {
+        Self::fetch()
     }
 
 }
