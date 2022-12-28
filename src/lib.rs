@@ -8,6 +8,7 @@ mod tests;
 mod fetcher;
 
 pub mod status;
+pub mod bap;
 
 pub trait ResponseObject {
     fn fetch(fetcher: Fetcher) -> Result<Self, reqwest::Error>
@@ -29,7 +30,14 @@ impl ICEPortal {
         Self { base_url, client: reqwest::blocking::Client::new() }
     }
 
-    pub fn fetch<T>(&self) -> T
+    pub fn fetch<T>() -> T
+        where T: ResponseObject {
+            T::fetch(
+                Fetcher{ base_url: String::from(DEFAULT_BASE_URL)}
+            ).expect("Error while request")
+    }
+
+    pub fn run_fetch<T>(&self) -> T
         where T: ResponseObject {
         T::fetch(
             Fetcher{ base_url: self.base_url.clone()}
