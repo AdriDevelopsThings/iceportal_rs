@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::Deserialize;
 
 use crate::ResponseObject;
@@ -7,9 +9,14 @@ pub struct Fetcher {
 }
 
 impl Fetcher {
-    pub fn fetch<T>(&self) -> Result<T, reqwest::Error>
+    pub fn fetch<T>(&self, options: Option<HashMap<&str, &str>>) -> Result<T, reqwest::Error>
         where T: ResponseObject +  for<'de> Deserialize<'de> {
-            let url = self.base_url.clone() + T::url();
+            let mut url = self.base_url.clone() + T::url();
+            if let Some(map) = options {
+                for (key, value) in map.into_iter() {
+                    url = url.replace(format!("{{{}}}", key).as_str(), &value);
+                }
+            }
             let client = reqwest::blocking::Client::new();
             Ok(client.get(url)
             .header("User-Agent", "iceportal_rs")

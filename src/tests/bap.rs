@@ -1,6 +1,6 @@
-use crate::{ICEPortal, bap::BAPServicStatusResponse};
+use crate::ICEPortal;
 
 #[test]
 fn test_bap() {
-    ICEPortal::fetch::<BAPServicStatusResponse>();
+    ICEPortal::fetch_bap();
 }

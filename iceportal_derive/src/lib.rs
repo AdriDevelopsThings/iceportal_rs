@@ -20,8 +20,8 @@ pub fn hello_world(input: TokenStream) -> TokenStream {
     let DeriveInput { ident, .. } = input;
     let output = quote! {
         impl ResponseObject for #ident {
-            fn fetch(fetcher: Fetcher) -> Result<#ident, reqwest::Error> {
-                fetcher.fetch()
+            fn fetch(fetcher: Fetcher, options: Option<HashMap<&str, &str>>) -> Result<#ident, reqwest::Error> {
+                fetcher.fetch(options)
             }
         
             fn url() -> &'static str {

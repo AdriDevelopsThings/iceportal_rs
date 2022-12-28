@@ -1,6 +1,7 @@
 use chrono::NaiveDate;
 use iceportal_derive::ResponseObject;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 use crate::{time, global_models::Stop, ResponseObject, Fetcher};
 

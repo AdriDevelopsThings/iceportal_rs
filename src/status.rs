@@ -1,5 +1,6 @@
 use iceportal_derive::ResponseObject;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 use crate::{ResponseObject, fetcher::Fetcher};
 

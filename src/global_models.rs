@@ -63,7 +63,7 @@ pub enum PositionStatus {
 pub struct StopInfo {
     pub status: i8,
     pub passed: bool,
-    pub position_status: PositionStatus,
+    pub position_status: Option<PositionStatus>,
     pub distance: u64,
     pub distance_from_start: u64,
 }
