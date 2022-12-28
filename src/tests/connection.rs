@@ -4,7 +4,13 @@ use crate::ICEPortal;
 
 #[test]
 fn test_connection() {
-    let eva_nr = env::var("CONNECTION_EVA_NR").unwrap();
+    let eva_nr_e = env::var("CONNECTION_EVA_NR");
+    if eva_nr_e.is_err() {
+        println!("WARNING: set CONNECTION_EVA_NR to test connection api endpoint!");
+        println!("Endpoint will be ignored");
+        return;
+    }
+    let eva_nr = eva_nr_e.unwrap();
     let connection = ICEPortal::fetch_connection(eva_nr.as_str()).unwrap();
     let first_connection = connection.connections.get(0).unwrap();
     assert!(!first_connection.train_type.is_empty());
