@@ -5,7 +5,7 @@ use crate::ICEPortal;
 #[test]
 fn test_connection() {
     let eva_nr = env::var("CONNECTION_EVA_NR").unwrap();
-    let connection = ICEPortal::fetch_connection(eva_nr.as_str());
+    let connection = ICEPortal::fetch_connection(eva_nr.as_str()).unwrap();
     let first_connection = connection.connections.get(0).unwrap();
     assert!(!first_connection.train_type.is_empty());
     assert!(!first_connection.vzn.is_empty());

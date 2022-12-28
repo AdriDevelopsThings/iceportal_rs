@@ -30,27 +30,27 @@ pub trait ResponseObject {
 pub struct ICEPortal;
 
 impl ICEPortal {
-    fn fetch<T>(options: Option<HashMap<&str, &str>>) -> T
+    fn fetch<T>(options: Option<HashMap<&str, &str>>) -> Result<T, reqwest::Error>
         where T: ResponseObject {
             T::fetch(
                 Fetcher{ base_url: String::from(DEFAULT_BASE_URL)},
                 options
-            ).expect("Error while request")
+            )
     }
 
-    pub fn fetch_status() -> StatusResponse {
+    pub fn fetch_status() -> Result<StatusResponse, reqwest::Error> {
         Self::fetch(None)
     }
 
-    pub fn fetch_bap() -> BAPServicStatusResponse {
+    pub fn fetch_bap() -> Result<BAPServicStatusResponse, reqwest::Error> {
         Self::fetch(None)
     }
 
-    pub fn fetch_trip_info() -> TripInfoResponse {
+    pub fn fetch_trip_info() -> Result<TripInfoResponse, reqwest::Error> {
         Self::fetch(None)
     }
 
-    pub fn fetch_connection(eva_nr: &str) -> ConnectionResponse {
+    pub fn fetch_connection(eva_nr: &str) -> Result<ConnectionResponse, reqwest::Error> {
         let mut options = HashMap::new();
         options.insert("eva_number", eva_nr);
         Self::fetch(Some(options))

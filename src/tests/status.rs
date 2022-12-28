@@ -5,7 +5,7 @@ use crate::{status::{ServiceLevel, GpsStatus}, ICEPortal};
 
 #[test]
 fn test_status() {
-    let status_response = ICEPortal::fetch_status();
+    let status_response = ICEPortal::fetch_status().unwrap();
     // run this in a working system
     assert!(status_response.connection);
     assert_eq!(status_response.service_level, ServiceLevel::AvailableService);
