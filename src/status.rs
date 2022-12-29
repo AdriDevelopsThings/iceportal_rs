@@ -1,8 +1,5 @@
-use iceportal_derive::ResponseObject;
 use serde::Deserialize;
-use std::collections::HashMap;
-
-use crate::{ResponseObject, fetcher::Fetcher};
+use crate::ResponseObject;
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
@@ -44,9 +41,8 @@ pub struct Connectivity {
     pub remaining_time_seconds: u16
 }
 
-#[derive(Deserialize, Debug, ResponseObject)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-#[response_object(url = "/api1/rs/status")]
 pub struct StatusResponse {
     pub connection: bool,
     pub service_level: ServiceLevel,
@@ -63,4 +59,10 @@ pub struct StatusResponse {
     pub wagon_class: WagonClass,
     pub connectivity: Connectivity,
     pub bap_installed: bool
+}
+
+impl ResponseObject for StatusResponse {
+    fn url() -> &'static str {
+        "/api1/rs/status"
+    }
 }

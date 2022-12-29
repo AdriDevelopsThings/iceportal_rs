@@ -1,9 +1,7 @@
 use chrono::NaiveDate;
-use iceportal_derive::ResponseObject;
 use serde::Deserialize;
-use std::collections::HashMap;
 
-use crate::{time, global_models::Stop, ResponseObject, Fetcher};
+use crate::{time, global_models::Stop, ResponseObject};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all="camelCase")]
@@ -30,8 +28,13 @@ pub struct TripInfo {
     pub stops: Vec<Stop>,
 }
 
-#[derive(Deserialize, Debug, ResponseObject)]
-#[response_object(url = "/api1/rs/tripInfo/trip")]
+#[derive(Deserialize, Debug)]
 pub struct TripInfoResponse {
     pub trip: TripInfo,
+}
+
+impl ResponseObject for TripInfoResponse {
+    fn url() -> &'static str {
+        "/api1/rs/tripInfo/trip"
+    }
 }

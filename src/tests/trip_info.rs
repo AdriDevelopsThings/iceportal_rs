@@ -2,9 +2,9 @@ use chrono::Datelike;
 
 use crate::ICEPortal;
 
-#[test]
-fn test_trip_info() {
-    let trip_info = ICEPortal::fetch_trip_info().unwrap();
+#[tokio::test]
+async fn test_trip_info() {
+    let trip_info = ICEPortal::fetch_trip_info().await.unwrap();
     assert!(trip_info.trip.trip_date.year() > 2020);
     assert!(!trip_info.trip.train_type.is_empty());
     assert!(!trip_info.trip.vzn.is_empty());

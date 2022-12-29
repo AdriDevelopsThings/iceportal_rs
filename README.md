@@ -14,7 +14,7 @@ Make a request to the `/api1/rs/status` api.
 ```rust
 use iceportal::ICEPortal;
 
-let status_response = ICEPortal::fetch_status();
+let status_response = ICEPortal::fetch_status().await.unwrap();
 println!("{:?}", status_response);
 ```
 
@@ -23,7 +23,7 @@ Make a request to the `/bap/api/bap-service-status` api.
 ```rust
 use iceportal::ICEPortal;
 
-let bap_response = ICEPortal::fetch_bap();
+let bap_response = ICEPortal::fetch_bap().await.unwrap();
 println!("{:?}", bap_response);
 ```
 
@@ -32,7 +32,7 @@ Make a request to the `/api1/rs/tripInfo/trip` api.
 ```rust
 use iceportal::ICEPortal;
 
-let trip_info_response = ICEPortal::fetch_trip_info();
+let trip_info_response = ICEPortal::fetch_trip_info().await.unwrap();
 println!("{:?}", trip_info_response);
 ```
 
@@ -42,6 +42,6 @@ Make a request to the `/api1/rs/tripInfo/connection/EVA_NUMBER` api.
 use iceportal::ICEPortal;
 
 let eva_nr = "8073368";
-let connection_response = ICEPortal::fetch_connection(eva_nr);
+let connection_response = ICEPortal::fetch_connection(eva_nr).await.unwrap();
 println!("{:?}", connection_response);
 ```

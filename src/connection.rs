@@ -1,9 +1,6 @@
-use std::collections::HashMap;
-
-use iceportal_derive::ResponseObject;
 use serde::Deserialize;
 
-use crate::{ResponseObject, fetcher::Fetcher, global_models::{Station, Timetable, Track, StopInfo, Stop}};
+use crate::{ResponseObject, global_models::{Station, Timetable, Track, StopInfo, Stop}};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -19,9 +16,14 @@ pub struct Connection {
 
 }
 
-#[derive(Deserialize, Debug, ResponseObject)]
+#[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
-#[response_object(url = "/api1/rs/tripInfo/connection/{eva_number}")]
 pub struct ConnectionResponse {
     pub connections: Vec<Connection>
+}
+
+impl ResponseObject for ConnectionResponse {
+    fn url() -> &'static str {
+        "/api1/rs/tripInfo/connection/{eva_number}"
+    }
 }

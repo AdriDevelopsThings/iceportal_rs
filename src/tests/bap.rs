@@ -1,6 +1,6 @@
 use crate::ICEPortal;
 
-#[test]
-fn test_bap() {
-    ICEPortal::fetch_bap().unwrap();
+#[tokio::test]
+async fn test_bap() {
+    ICEPortal::fetch_bap().await.unwrap();
 }
