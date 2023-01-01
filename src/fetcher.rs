@@ -2,14 +2,14 @@ use std::collections::HashMap;
 
 use serde::Deserialize;
 
-use crate::ResponseObject;
+use crate::{ResponseObject, errors::ICEPortalError};
 
 pub struct Fetcher {
     pub base_url: String,
 }
 
 impl Fetcher {
-    pub async fn fetch<T>(&self, options: Option<HashMap<&str, &str>>) -> Result<T, reqwest::Error>
+    pub async fn fetch<T>(&self, options: Option<HashMap<&str, &str>>) -> Result<T, ICEPortalError>
         where T: ResponseObject + for<'de> Deserialize<'de> {
             let mut url = self.base_url.clone() + T::url();
             if let Some(map) = options {
@@ -18,8 +18,10 @@ impl Fetcher {
                 }
             }
             let client = reqwest::Client::new();
-            client.get(url)
+            Ok(
+                client.get(url)
                 .header("User-Agent", "iceportal_rs")
-                .send().await?.json().await
+                .send().await?.json().await?
+            )
     }
 }

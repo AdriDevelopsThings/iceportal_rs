@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 use bap::BAPServicStatusResponse;
 use connection::ConnectionResponse;
+use errors::ICEPortalError;
 use fetcher::Fetcher;
 use serde::Deserialize;
 use status::StatusResponse;
@@ -15,6 +16,7 @@ mod tests;
 mod fetcher;
 mod time;
 
+pub mod errors;
 pub mod global_models;
 
 pub mod status;
@@ -29,7 +31,7 @@ pub trait ResponseObject {
 }
 
 impl ICEPortal {
-    async fn fetch<T>(options: Option<HashMap<&str, &str>>) -> Result<T, reqwest::Error>
+    async fn fetch<T>(options: Option<HashMap<&str, &str>>) -> Result<T, ICEPortalError>
         where T: ResponseObject + for<'de> Deserialize<'de> {
             let fetcher = Fetcher{ base_url: String::from(DEFAULT_BASE_URL)};
             fetcher.fetch(
@@ -37,19 +39,19 @@ impl ICEPortal {
             ).await
     }
 
-    pub async fn fetch_status() -> Result<StatusResponse, reqwest::Error> {
+    pub async fn fetch_status() -> Result<StatusResponse, ICEPortalError> {
         Self::fetch(None).await
     }
 
-    pub async fn fetch_bap() -> Result<BAPServicStatusResponse, reqwest::Error> {
+    pub async fn fetch_bap() -> Result<BAPServicStatusResponse, ICEPortalError> {
         Self::fetch(None).await
     }
 
-    pub async fn fetch_trip_info() -> Result<TripInfoResponse, reqwest::Error> {
+    pub async fn fetch_trip_info() -> Result<TripInfoResponse, ICEPortalError> {
         Self::fetch(None).await
     }
 
-    pub async fn fetch_connection(eva_nr: &str) -> Result<ConnectionResponse, reqwest::Error> {
+    pub async fn fetch_connection(eva_nr: &str) -> Result<ConnectionResponse, ICEPortalError> {
         let mut options = HashMap::new();
         options.insert("eva_number", eva_nr);
         Self::fetch(Some(options)).await
