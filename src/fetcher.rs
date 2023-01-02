@@ -18,10 +18,16 @@ impl Fetcher {
                 }
             }
             let client = reqwest::Client::new();
-            Ok(
-                client.get(url)
+            let response = client.get(url)
                 .header("User-Agent", "iceportal_rs")
-                .send().await?.json().await?
-            )
+                .send().await?;
+            let content_type =  response.headers()
+                .get("content-type").unwrap()
+                .to_str().unwrap_or("");
+            if content_type.starts_with("text/html") {
+                return Err(ICEPortalError::NotConnectedToICEPortal);
+            }
+
+            Ok(response.json().await?)
     }
 }

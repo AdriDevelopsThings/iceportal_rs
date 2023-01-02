@@ -54,6 +54,7 @@ pub struct Track {
 #[serde(rename_all = "lowercase")]
 pub enum PositionStatus {
     Passed,
+    Arrived,
     Departed,
     Future
 }

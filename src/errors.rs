@@ -1,6 +1,7 @@
 #[derive(Debug)]
 pub enum ICEPortalError {
-    RequestError(reqwest::Error)
+    RequestError(reqwest::Error),
+    NotConnectedToICEPortal
 }
 
 impl From<reqwest::Error> for ICEPortalError {

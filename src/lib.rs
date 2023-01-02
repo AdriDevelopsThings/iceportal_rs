@@ -9,7 +9,7 @@ use serde::Deserialize;
 use status::StatusResponse;
 use trip_info::TripInfoResponse;
 
-const DEFAULT_BASE_URL: &str = "http://iceportal.de";
+const DEFAULT_BASE_URL: &str = "https://iceportal.de";
 
 #[cfg(test)]
 mod tests;

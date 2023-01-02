@@ -37,8 +37,8 @@ pub enum WagonClass {
 #[serde(rename_all = "camelCase")]
 pub struct Connectivity {
     pub current_state: InternetStatus,
-    pub next_state: InternetStatus,
-    pub remaining_time_seconds: u16
+    pub next_state: Option<InternetStatus>,
+    pub remaining_time_seconds: Option<u16>
 }
 
 #[derive(Deserialize, Debug)]
