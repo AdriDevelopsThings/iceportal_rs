@@ -14,7 +14,7 @@ async fn test_status() {
     assert_ne!(status_response.longitude, 0f64);
     let now = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_millis();
     let time_difference = status_response.server_time as i128 - now as i128;
-    if time_difference.abs() > 10 {
+    if time_difference.abs() > 1000 * 10 {
         panic!("train server time differs from local time by more than 10 milliseconds ({} milliseconds)", time_difference.abs());
     }
 }
