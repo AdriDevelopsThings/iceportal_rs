@@ -12,7 +12,8 @@ pub enum ServiceLevel {
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum GpsStatus {
     Valid,
-    Invalid
+    Invalid,
+    LastKnownPosition
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
