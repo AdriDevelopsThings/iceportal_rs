@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use reqwest::StatusCode;
 use serde::Deserialize;
 
 use crate::{ResponseObject, errors::ICEPortalError};
@@ -24,7 +25,7 @@ impl Fetcher {
             let content_type =  response.headers()
                 .get("content-type").unwrap()
                 .to_str().unwrap_or("");
-            if content_type.starts_with("text/html") {
+            if content_type.starts_with("text/html") || response.status() == StatusCode::BAD_REQUEST {
                 return Err(ICEPortalError::NotConnectedToICEPortal);
             }
 
