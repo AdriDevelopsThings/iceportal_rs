@@ -14,7 +14,7 @@ pub enum BAPServiceStatus {
 #[serde(rename_all = "camelCase")]
 pub struct BAPServicStatusResponse {
     pub bap_service_status: BAPServiceStatus,
-    pub status: bool
+    pub status: Option<bool>,
 }
 
 impl ResponseObject for BAPServicStatusResponse {
