@@ -317,7 +317,7 @@ dependencies = [
 
 [[package]]
 name = "iceportal"
-version = "2.0.5"
+version = "3.0.0"
 dependencies = [
  "chrono",
  "reqwest",
