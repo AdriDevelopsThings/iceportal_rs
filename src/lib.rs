@@ -11,18 +11,18 @@ use trip_info::TripInfoResponse;
 
 const DEFAULT_BASE_URL: &str = "https://iceportal.de";
 
+mod fetcher;
 #[cfg(test)]
 mod tests;
-mod fetcher;
 mod time;
 
 pub mod errors;
 pub mod global_models;
 
-pub mod status;
 pub mod bap;
-pub mod trip_info;
 pub mod connection;
+pub mod status;
+pub mod trip_info;
 
 pub struct ICEPortal;
 
@@ -32,11 +32,13 @@ pub trait ResponseObject {
 
 impl ICEPortal {
     async fn fetch<T>(options: Option<HashMap<&str, &str>>) -> Result<T, ICEPortalError>
-        where T: ResponseObject + for<'de> Deserialize<'de> {
-            let fetcher = Fetcher{ base_url: String::from(DEFAULT_BASE_URL)};
-            fetcher.fetch(
-                options
-            ).await
+    where
+        T: ResponseObject + for<'de> Deserialize<'de>,
+    {
+        let fetcher = Fetcher {
+            base_url: String::from(DEFAULT_BASE_URL),
+        };
+        fetcher.fetch(options).await
     }
 
     pub async fn fetch_status() -> Result<StatusResponse, ICEPortalError> {
@@ -56,5 +58,4 @@ impl ICEPortal {
         options.insert("eva_number", eva_nr);
         Self::fetch(Some(options)).await
     }
-
 }

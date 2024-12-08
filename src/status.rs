@@ -1,11 +1,11 @@
-use serde::Deserialize;
 use crate::ResponseObject;
+use serde::Deserialize;
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum ServiceLevel {
     AvailableService,
-    ServiceError
+    ServiceError,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
@@ -13,7 +13,7 @@ pub enum ServiceLevel {
 pub enum GpsStatus {
     Valid,
     Invalid,
-    LastKnownPosition
+    LastKnownPosition,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
@@ -24,14 +24,14 @@ pub enum InternetStatus {
     Weak,
     Unstable,
     NoInfo,
-    NoInternet
+    NoInternet,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum WagonClass {
     First,
-    Second
+    Second,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
@@ -39,7 +39,7 @@ pub enum WagonClass {
 pub struct Connectivity {
     pub current_state: InternetStatus,
     pub next_state: Option<InternetStatus>,
-    pub remaining_time_seconds: Option<u16>
+    pub remaining_time_seconds: Option<u16>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -59,7 +59,7 @@ pub struct StatusResponse {
     pub tzn: String,
     pub wagon_class: WagonClass,
     pub connectivity: Connectivity,
-    pub bap_installed: bool
+    pub bap_installed: bool,
 }
 
 impl ResponseObject for StatusResponse {

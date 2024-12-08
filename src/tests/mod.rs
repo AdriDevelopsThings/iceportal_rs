@@ -1,5 +1,5 @@
-mod time;
-mod status;
 mod bap;
-mod trip_info;
 mod connection;
+mod status;
+mod time;
+mod trip_info;

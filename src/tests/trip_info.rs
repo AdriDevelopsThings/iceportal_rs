@@ -11,7 +11,7 @@ async fn test_trip_info() {
     assert!(!trip_info.trip.stop_info.final_station_name.is_empty());
     assert!(!trip_info.trip.stop_info.final_station_eva_nr.is_empty());
     assert_ne!(trip_info.trip.stops.len(), 0);
-    let stop = trip_info.trip.stops.get(0).unwrap();
+    let stop = trip_info.trip.stops.first().unwrap();
     assert!(!stop.station.eva_nr.is_empty());
     assert!(!stop.station.name.is_empty());
     assert!(stop.station.geocoordinates.is_some());
@@ -20,7 +20,9 @@ async fn test_trip_info() {
     assert_ne!(geocoordinates.longitude, 0f64);
     let timetable = &stop.timetable;
     assert!(timetable.scheduled_departure_time.is_some());
-    if timetable.show_actual_departure_time.is_some() && timetable.show_actual_departure_time.unwrap() {
+    if timetable.show_actual_departure_time.is_some()
+        && timetable.show_actual_departure_time.unwrap()
+    {
         assert!(timetable.actual_departure_time.is_some());
     }
     assert!(!stop.track.scheduled.is_empty());

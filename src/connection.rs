@@ -1,6 +1,9 @@
 use serde::Deserialize;
 
-use crate::{ResponseObject, global_models::{Station, Timetable, Track, StopInfo, Stop}};
+use crate::{
+    global_models::{Station, Stop, StopInfo, Timetable, Track},
+    ResponseObject,
+};
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -13,13 +16,12 @@ pub struct Connection {
     pub track: Track,
     pub info: StopInfo,
     pub stops: Vec<Stop>,
-
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ConnectionResponse {
-    pub connections: Vec<Connection>
+    pub connections: Vec<Connection>,
 }
 
 impl ResponseObject for ConnectionResponse {

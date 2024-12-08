@@ -8,15 +8,15 @@ use crate::time;
 #[derive(Deserialize, Debug)]
 pub struct Geocoordinates {
     pub latitude: f64,
-    pub longitude: f64
+    pub longitude: f64,
 }
 
 #[derive(Deserialize, Debug)]
-#[serde(rename_all="camelCase")]
+#[serde(rename_all = "camelCase")]
 pub struct Station {
     pub eva_nr: String,
     pub name: String,
-    pub geocoordinates: Option<Geocoordinates>
+    pub geocoordinates: Option<Geocoordinates>,
 }
 
 impl Display for Station {
@@ -26,7 +26,7 @@ impl Display for Station {
 }
 
 #[derive(Deserialize, Debug)]
-#[serde(rename_all="camelCase")]
+#[serde(rename_all = "camelCase")]
 pub struct Timetable {
     #[serde(deserialize_with = "time::naive_date_time_from_ms")]
     pub scheduled_arrival_time: Option<NaiveDateTime>,
@@ -47,7 +47,7 @@ pub struct Timetable {
 #[derive(Deserialize, Debug)]
 pub struct Track {
     pub scheduled: String,
-    pub actual: String
+    pub actual: String,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
@@ -56,11 +56,11 @@ pub enum PositionStatus {
     Passed,
     Arrived,
     Departed,
-    Future
+    Future,
 }
 
 #[derive(Deserialize, Debug)]
-#[serde(rename_all="camelCase")]
+#[serde(rename_all = "camelCase")]
 pub struct StopInfo {
     pub status: i8,
     pub passed: bool,
@@ -72,7 +72,7 @@ pub struct StopInfo {
 #[derive(Deserialize, Debug)]
 pub struct DelayReason {
     pub code: String,
-    pub text: String
+    pub text: String,
 }
 
 #[derive(Deserialize, Debug)]
@@ -82,5 +82,5 @@ pub struct Stop {
     pub timetable: Timetable,
     pub track: Track,
     pub info: StopInfo,
-    pub delay_reasons: Option<Vec<DelayReason>>
+    pub delay_reasons: Option<Vec<DelayReason>>,
 }
