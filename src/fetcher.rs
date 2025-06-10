@@ -1,9 +1,20 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    sync::{LazyLock, RwLock},
+};
 
 use reqwest::StatusCode;
 use serde::Deserialize;
 
 use crate::{errors::ICEPortalError, ResponseObject};
+
+static REQWEST_CLIENT: LazyLock<RwLock<reqwest::Client>> =
+    LazyLock::new(|| RwLock::new(reqwest::Client::new()));
+
+pub fn globally_set_reqwest_client(client: reqwest::Client) {
+    let mut r_client = REQWEST_CLIENT.write().unwrap();
+    *r_client = client;
+}
 
 pub struct Fetcher {
     pub base_url: String,
@@ -20,7 +31,7 @@ impl Fetcher {
                 url = url.replace(format!("{{{}}}", key).as_str(), value);
             }
         }
-        let client = reqwest::Client::new();
+        let client = { REQWEST_CLIENT.read().unwrap().clone() };
         let response = client
             .get(url)
             .header("User-Agent", "iceportal_rs")

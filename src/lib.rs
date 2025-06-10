@@ -30,6 +30,8 @@ pub mod connection;
 pub mod status;
 pub mod trip_info;
 
+pub use fetcher::globally_set_reqwest_client;
+
 pub struct ICEPortal;
 
 pub trait ResponseObject {
