@@ -9,7 +9,13 @@ use serde::Deserialize;
 use status::StatusResponse;
 use trip_info::TripInfoResponse;
 
+#[cfg(test)]
+use std::sync::{LazyLock, RwLock};
+
 const DEFAULT_BASE_URL: &str = "https://iceportal.de";
+#[cfg(test)]
+pub(crate) static BASE_URL_OVERRIDE: LazyLock<RwLock<String>> =
+    LazyLock::new(|| RwLock::new(String::new()));
 
 mod fetcher;
 #[cfg(test)]
@@ -35,9 +41,18 @@ impl ICEPortal {
     where
         T: ResponseObject + for<'de> Deserialize<'de>,
     {
-        let fetcher = Fetcher {
-            base_url: String::from(DEFAULT_BASE_URL),
+        #[cfg(test)]
+        let base_url = {
+            let base_url_override = BASE_URL_OVERRIDE.read().unwrap().to_owned();
+            if base_url_override.is_empty() {
+                String::from(DEFAULT_BASE_URL)
+            } else {
+                base_url_override
+            }
         };
+        #[cfg(not(test))]
+        let base_url = String::from(DEFAULT_BASE_URL);
+        let fetcher = Fetcher { base_url };
         fetcher.fetch(options).await
     }
 

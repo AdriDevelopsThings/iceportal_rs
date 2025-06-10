@@ -32,7 +32,11 @@ impl Fetcher {
             .unwrap()
             .to_str()
             .unwrap_or("");
-        if content_type.starts_with("text/html") || response.status() == StatusCode::BAD_REQUEST {
+        if content_type.starts_with("text/html")
+            || content_type.starts_with("application/octet-stream")
+            || response.status() == StatusCode::BAD_REQUEST
+            || response.content_length() == Some(0)
+        {
             return Err(ICEPortalError::NotConnectedToICEPortal);
         }
 

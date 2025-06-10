@@ -1,7 +1,7 @@
 use chrono::{Datelike, NaiveDate, NaiveDateTime, Timelike};
 use serde::Deserialize;
 
-use crate::time;
+use crate::{tests::prepare::prepare_tests, time};
 
 #[derive(Deserialize)]
 struct TestDateFromString {
@@ -11,6 +11,7 @@ struct TestDateFromString {
 
 #[test]
 fn test_date_from_str() {
+    prepare_tests();
     let test: TestDateFromString =
         serde_json::from_str("{\"timestamp\": \"2022-12-27\"}").expect("Error while parsing");
     assert_eq!(test.timestamp.day(), 27);
@@ -26,6 +27,7 @@ struct TestDateTimeFromMs {
 
 #[test]
 fn test_date_time_from_ms() {
+    prepare_tests();
     let test: TestDateTimeFromMs =
         serde_json::from_str("{\"timestamp\": 1672249609000}").expect("Error while parsing");
     let timestamp = test.timestamp.unwrap();
@@ -45,6 +47,7 @@ struct TestDelayFromStr {
 
 #[test]
 fn test_delay_positive() {
+    prepare_tests();
     let test: TestDelayFromStr =
         serde_json::from_str("{\"delay\": \"+120\"}").expect("Error while parsing");
     assert_eq!(test.delay.unwrap(), 120);
@@ -52,6 +55,7 @@ fn test_delay_positive() {
 
 #[test]
 fn test_delay_negative() {
+    prepare_tests();
     let test: TestDelayFromStr =
         serde_json::from_str("{\"delay\": \"-6\"}").expect("Error while parsing");
     assert_eq!(test.delay.unwrap(), -6);

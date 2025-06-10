@@ -1,9 +1,10 @@
 use std::env;
 
-use crate::ICEPortal;
+use crate::{tests::prepare::prepare_tests, ICEPortal};
 
 #[tokio::test]
 async fn test_connection() {
+    prepare_tests();
     let eva_nr_e = env::var("CONNECTION_EVA_NR");
     if eva_nr_e.is_err() {
         println!("WARNING: set CONNECTION_EVA_NR to test connection api endpoint!");

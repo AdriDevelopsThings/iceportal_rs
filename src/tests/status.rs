@@ -2,11 +2,13 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::{
     status::{GpsStatus, ServiceLevel},
+    tests::prepare::prepare_tests,
     ICEPortal,
 };
 
 #[tokio::test]
 async fn test_status() {
+    prepare_tests();
     let status_response = ICEPortal::fetch_status().await.unwrap();
     // run this in a working system
     assert!(status_response.connection);
