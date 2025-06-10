@@ -1,11 +1,11 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{
     global_models::{Station, Stop, StopInfo, Timetable, Track},
     ResponseObject,
 };
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Connection {
     pub train_type: String,
@@ -18,7 +18,7 @@ pub struct Connection {
     pub stops: Vec<Stop>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ConnectionResponse {
     pub connections: Vec<Connection>,

@@ -1,5 +1,12 @@
 use chrono::{DateTime, NaiveDate, NaiveDateTime};
-use serde::{de, Deserialize, Deserializer};
+use serde::{de, Deserialize, Deserializer, Serializer};
+
+pub fn naive_date_to_str<S>(v: &NaiveDate, serializer: S) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    serializer.serialize_str(&v.format("%Y-%m-%d").to_string())
+}
 
 pub fn naive_date_from_str<'de, D>(deserializer: D) -> Result<NaiveDate, D::Error>
 where
@@ -22,6 +29,20 @@ where
         ),
         None => None,
     })
+}
+
+pub fn naive_date_time_to_str<S>(
+    v: &Option<NaiveDateTime>,
+    serializer: S,
+) -> Result<S::Ok, S::Error>
+where
+    S: Serializer,
+{
+    if let Some(v) = v {
+        serializer.serialize_str(&v.format("%Y-%m-%dT%H:%M:%S").to_string())
+    } else {
+        serializer.serialize_none()
+    }
 }
 
 pub fn delay_by_str<'de, D>(deserializer: D) -> Result<Option<i32>, D::Error>

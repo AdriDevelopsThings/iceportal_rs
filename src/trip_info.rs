@@ -1,9 +1,9 @@
 use chrono::NaiveDate;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 use crate::{global_models::Stop, time, ResponseObject};
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TripGeneralStopInfo {
     pub scheduled_next: String,
@@ -14,10 +14,13 @@ pub struct TripGeneralStopInfo {
     pub final_station_eva_nr: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct TripInfo {
-    #[serde(deserialize_with = "time::naive_date_from_str")]
+    #[serde(
+        serialize_with = "time::naive_date_to_str",
+        deserialize_with = "time::naive_date_from_str"
+    )]
     pub trip_date: NaiveDate,
     pub train_type: String,
     pub vzn: String,
@@ -28,7 +31,7 @@ pub struct TripInfo {
     pub stops: Vec<Stop>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct TripInfoResponse {
     pub trip: TripInfo,
 }
